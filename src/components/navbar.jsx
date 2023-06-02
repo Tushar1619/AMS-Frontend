@@ -184,9 +184,11 @@ export default function Navbar(props) {
   const handleLogout = () => {
     localStorage.clear()
     setDropDownIsOpen((prev) => !prev)
-    navigate('/')
+    navigate('/');
+    location.reload();
+    
   }
-
+  console.log(user);
   return (
     <>
       <nav className="py-4 px-2 mx-10">
@@ -247,15 +249,15 @@ export default function Navbar(props) {
               </div>
               <hr className="border border-gray-500 w-full my-2" />
               {menu.map((item, i) => (
-                <Link key='321432'
-                  to={item.label == 'Logout' ? '' : item.page}
+                <Link key={i}
+                  to={item.label === 'Logout' ? '' : item.page}
                   className="w-full"
                 >
                   <button
-                    className="flex items-center px-5 w-full rounded-md hover:bg-blue-200 my-1"
+                    className={` ${ (item.label==='Leave' && user==='student')?'hidden':''} flex items-center px-5 w-full rounded-md hover:bg-blue-200 my-1`}
                     key={i}
                     onClick={
-                      item.label == 'Logout'
+                      item.label === 'Logout'
                         ? handleLogout
                         : () => {
                             setDropDownIsOpen((prev) => !prev)

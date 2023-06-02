@@ -15,7 +15,8 @@ const Timetable = () => {
 
   const getTimeTable = async (event) => {
     const user = JSON.parse(localStorage.getItem('userData'))
-    const tt = await axios.get('http://localhost:5000/api/timetable',
+    // console.log(user);
+    const tt = await axios.get('http://localhost:5000/api/timetable/',
       {
         params: {
           "classs": user.classs,
@@ -150,9 +151,9 @@ const Timetable = () => {
                 </td>
                
                 {
-                   periods.map((period) => (
+                   periods.map((period,idx) => (
                     <td
-                    key={`${days[pidx]}-${times[pidx]}`}
+                    key={`${days[pidx]}-${times[idx]}`}
                     className={breakColBorder(times[pidx], days[pidx])}
                   >
                     {period}

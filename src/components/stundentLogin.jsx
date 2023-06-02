@@ -28,7 +28,7 @@ export default function Login(props) {
       localStorage.setItem('user','student');
       localStorage.setItem('userData',JSON.stringify(res.user));
 
-      navigate('/');
+      navigate('/dashboard');
     }
   }
   return (
