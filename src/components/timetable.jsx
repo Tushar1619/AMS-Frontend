@@ -2,26 +2,28 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
 const Timetable = () => {
-  // let timeTable;
+  let userData = JSON.parse(localStorage.getItem('userData'))
+  const updateDetails = async (event)=>{
+ 
+    setData([]);
+    getTimeTable();
+  }
   const [data, setData] = useState([])
   useEffect(() => {
     getTimeTable();
   }, [])
-
-  // const [tueTimeTable, setTueTimeTable] = useState([])
-  // const [wedTimeTable, setWedTimeTable] = useState([])
-  // const [thuTimeTable, setThuTimeTable] = useState([])
-  // const [friTimeTable, setFriTimeTable] = useState([])
-
   const getTimeTable = async (event) => {
     const user = JSON.parse(localStorage.getItem('userData'))
-    // console.log(user);
+    console.log(userData);
+    let userClass = selectedBrnchOpt;
+    let userSection = selectedSectOpt;
+    let userYear = selectedYrOpt;
     const tt = await axios.get('http://localhost:5000/api/timetable/',
       {
         params: {
-          "classs": user.classs,
-          "section": user.section,
-          "year": user.year
+          "classs": userClass,
+          "section": userSection,
+          "year": userYear
         }
       },
       {
@@ -35,7 +37,6 @@ const Timetable = () => {
     setData(data => [...data, tt.data.days.wed])
     setData(data => [...data, tt.data.days.thu])
     setData(data => [...data, tt.data.days.fri])
-    // setData(data=>[...data,tt.data.days.sat])
 
   }
 
@@ -85,12 +86,12 @@ const Timetable = () => {
     return ''
   }
 
-  const yearOpt = ['1st', '2nd', '3rd', '4th']
-  const [selectedYrOpt, setSelectedYrOpt] = useState('')
-  const branchOpt = ['CSE', 'IT', 'ECE', 'EEE']
-  const [selectedBrnchOpt, setSelectedBrnchOpt] = useState('')
-  const sectionOpt = ['A', 'B', 'C']
-  const [selectedSectOpt, setSelectedSectOpt] = useState('')
+  const yearOpt = ['2023', '2024', '2025', '2026']
+  const [selectedYrOpt, setSelectedYrOpt] = useState(userData.year)
+  const branchOpt = ['cse', 'it', 'ece', 'eee']
+  const [selectedBrnchOpt, setSelectedBrnchOpt] = useState(userData.classs)
+  const sectionOpt = ['a', 'b', 'c']
+  const [selectedSectOpt, setSelectedSectOpt] = useState(userData.sec)
 
   const handleSelectYrChange = (event) => {
     setSelectedYrOpt(event.target.value)
@@ -123,25 +124,7 @@ const Timetable = () => {
           </tr>
         </thead>
         <tbody>
-          {/* {days.map((day,dayIdx) => (
-  
-              <tr key={day} className={rowStyle(day)}>
-                <td className="border border-gray-500 text-center font-semibold w-40">
-                  {day}
-                </td>
-               
-                {
-                  times.map((time, p) => (
-                    <td
-                      key={`${day}-${time}`}
-                      className={breakColBorder(time, day)}
-                    >
-                    </td>
-                  ))}
-              </tr>
-  
-            ))} */}
-            
+      
             {
         data.map((periods,pidx) => (
           
@@ -195,6 +178,7 @@ const Timetable = () => {
           ))}
         </select>
       </div>
+      <button onClick={updateDetails} className='bg-blue-500 mb-5 p-2 mt-3'>Submit</button>
     </div>
   )
 
