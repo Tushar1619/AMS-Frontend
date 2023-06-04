@@ -13,7 +13,6 @@ const Timetable = () => {
     getTimeTable();
   }, [])
   const getTimeTable = async (event) => {
-    const user = JSON.parse(localStorage.getItem('userData'))
     console.log(userData);
     let userClass = selectedBrnchOpt;
     let userSection = selectedSectOpt;
@@ -91,7 +90,7 @@ const Timetable = () => {
   const branchOpt = ['cse', 'it', 'ece', 'eee']
   const [selectedBrnchOpt, setSelectedBrnchOpt] = useState(userData.classs)
   const sectionOpt = ['a', 'b', 'c']
-  const [selectedSectOpt, setSelectedSectOpt] = useState(userData.sec)
+  const [selectedSectOpt, setSelectedSectOpt] = useState(userData.section)
 
   const handleSelectYrChange = (event) => {
     setSelectedYrOpt(event.target.value)
